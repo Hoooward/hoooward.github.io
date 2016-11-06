@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2016/03/16/runtime/</loc>
+    
+    <lastmod>2016-11-06T06:09:59.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2016/03/17/Stack-View%E7%9A%84%E5%BC%80%E5%A7%8B/</loc>
     
     <lastmod>2016-08-05T05:28:45.000Z</lastmod>

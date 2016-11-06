@@ -1,4 +1,110 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Stack View 的开始 · Hexo</title><meta name="description" content="iTychooo."><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.jpg"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Hexo"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.jpg"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">TYCHOOO</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/p/1005051855353313/home?from=page_100505&amp;mod=TAB#place" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/Hoooward" target="_blank" class="nav-list-link">GITHUB</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Stack View 的开始</h1><div class="post-info">Mar 17, 2016</div><div class="post-content"><p>作为一名刚刚入门 iOS 开发的人来说，理解并熟练使用 Auto Layhout 非常重要。开始接触自动布局是非常困难和复杂的，布局一个视图通常需要添加非常多的约束<code>constraints</code>，尤其是在创建动态视图时，我们要不断的重复添加和删除约束以达到我们想要的效果。而使用 <code>Stack View</code> 可以很大程度上简化我们频繁调试约束的过程。</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Stack View 的开始 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="作为一名刚刚入门 iOS 开发的人来说，理解并熟练使用 Auto Layhout 非常重要。开始接触自动布局是非常困难和复杂的，布局一个视图通常需要添加非常多的约束constraints，尤其是在创建动态视图时，我们要不断的重复添加和删除约束以达到我们想要的效果。而使用 Stack View 可以很大程度上简化我们频繁调试约束的过程。
+通常,我们在创建用户界面的时候很多视图是程线性排列的。以下面这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stack View 的开始">
+<meta property="og:url" content="http://yoursite.com/2016/03/17/Stack-View的开始/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="作为一名刚刚入门 iOS 开发的人来说，理解并熟练使用 Auto Layhout 非常重要。开始接触自动布局是非常困难和复杂的，布局一个视图通常需要添加非常多的约束constraints，尤其是在创建动态视图时，我们要不断的重复添加和删除约束以达到我们想要的效果。而使用 Stack View 可以很大程度上简化我们频繁调试约束的过程。
+通常,我们在创建用户界面的时候很多视图是程线性排列的。以下面这">
+<meta property="og:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 3.06.19 PM.png">
+<meta property="og:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 3.32.30 PM.png">
+<meta property="og:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 3.37.14 PM.png">
+<meta property="og:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 3.41.27 PM.png">
+<meta property="og:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 3.54.39 PM.png">
+<meta property="og:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 4.22.11 PM.png">
+<meta property="og:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 4.32.10 PM.png">
+<meta property="og:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 4.46.46 PM.png">
+<meta property="og:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 4.51.48 PM.png">
+<meta property="og:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 5.03.01 PM.png">
+<meta property="og:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 5.06.52 PM.png">
+<meta property="og:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 5.13.25 PM.png">
+<meta property="og:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 5.18.39 PM.png">
+<meta property="og:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 5.47.57 PM.png">
+<meta property="og:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 5.57.15 PM.png">
+<meta property="og:updated_time" content="2016-08-05T05:28:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Stack View 的开始">
+<meta name="twitter:description" content="作为一名刚刚入门 iOS 开发的人来说，理解并熟练使用 Auto Layhout 非常重要。开始接触自动布局是非常困难和复杂的，布局一个视图通常需要添加非常多的约束constraints，尤其是在创建动态视图时，我们要不断的重复添加和删除约束以达到我们想要的效果。而使用 Stack View 可以很大程度上简化我们频繁调试约束的过程。
+通常,我们在创建用户界面的时候很多视图是程线性排列的。以下面这">
+<meta name="twitter:image" content="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 3.06.19 PM.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Stack-View的开始" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/17/Stack-View的开始/" class="article-date">
+  <time datetime="2016-03-17T10:06:25.000Z" itemprop="datePublished">2016-03-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Stack View 的开始
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>作为一名刚刚入门 iOS 开发的人来说，理解并熟练使用 Auto Layhout 非常重要。开始接触自动布局是非常困难和复杂的，布局一个视图通常需要添加非常多的约束<code>constraints</code>，尤其是在创建动态视图时，我们要不断的重复添加和删除约束以达到我们想要的效果。而使用 <code>Stack View</code> 可以很大程度上简化我们频繁调试约束的过程。</p>
 <p>通常,我们在创建用户界面的时候很多视图是程<code>线性</code>排列的。以下面这个界面为例，界面中包括非常多的子视图<code>UILabel</code>，它们是垂直<code>vertically</code>线性排列的。</p>
 <p><img src="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 3.06.19 PM.png" alt="示例"><br><a id="more"></a><br>当用户界面像上图这样程线性排列的时候，就可以考虑使用<strong>Stack View</strong>了，它是一个<strong>UIStackView</strong>的实例，用来创建垂直或水平的布局。不仅简单实现布局，而且可以帮助你管理不同 View 的各种约束。在理想状态下，你还可以将另外一个 StackView 嵌入到 StackView 中，得益于这个特性，我们可以极大的缩减在布局用户界面时花费的时间。</p>
 <p>接下来，我们将创建一个对用某个 model 元素的 Detail 视图来了解一些关于<strong>Stack View</strong>的特性。<br>首先，创建一个新的项目，从库中拖拽一个<code>Vertical Stack View</code> 到 Storyboard 中默认的 ViewController 中。<br><img src="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 3.32.30 PM.png" alt=""></p>
@@ -46,12 +152,114 @@
 <p>按住 <em>Ctrl</em> 从 Name text field 拖拽到 Serial text field 选择 Leading， 然后对 Serial text field 和 Value text field 做同样的约束添加。 It’s Done!</p>
 <p><img src="http://7xrfzx.com1.z0.glb.clouddn.com/2016-03-17-Screen Shot 2016-03-17 at 5.57.15 PM.png" alt="Screen Shot 2016-03-17 at 5.57.15 P"></p>
 <p>Stack view 允许你创建非常复杂的用户界面同时又非常便捷高效，不要忘记很多时候 contraints 仍然需要添加，但更多的约束是有 stack view 来管理，而不是你自己。Stack view 还允许你创建动态的用户界面。你可以使用 <strong>addArrangedSubView（_:</strong> ，<strong>insertArrangedSubview(_:atIndex:)</strong>，<strong>removeArrangedSubview(_:atIndex:)</strong> 在 stack view 中添加或者删除某个 view。也可以设置 view 的 hidden 属性 让某个 view 出现和消失，stack view 会识别这个状态，并自动重新布局。</p>
-</div></article></div></section><footer><div class="paginator"><a href="/2016/08/05/利用-Runtime-为-UIIImageView-添加-ActivityIndicatorView/" class="prev">PREV</a><a href="/2016/03/16/CS193P-第五课笔记/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
-var disqus_identifier = '2016/03/17/Stack-View的开始/';
-var disqus_title = 'Stack View 的开始';
-var disqus_url = 'http://yoursite.com/2016/03/17/Stack-View的开始/';
-(function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();</script><script id="dsq-count-scr" src="//seansun.disqus.com/count.js" async></script><div class="copyright"><p>© 2015 - 2016 <a href="http://yoursite.com">John Doe</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/03/17/Stack-View的开始/" data-id="civ68dxz20003d05sy4fu01xr" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/03/16/CS193P-第五课笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">CS193P 第五课笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/03/17/Stack-View的开始/">Stack View 的开始</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/16/CS193P-第五课笔记/">CS193P 第五课笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/16/CS193P-第四课笔记/">CS193P 第四课笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/16/Octopress的初级使用/"> Octopress的初级使用</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/16/iOS-中-UIGestureRecognizer-手势的使用/">iOS 中 UIGestureRecognizer 手势的使用</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

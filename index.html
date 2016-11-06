@@ -74,7 +74,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<p>title: 利用 Associated Objects 为 UIImageView 添加 activityIndicator<br>date: 2016-03-16 15:21:37</p>
+<p>title: 利用 Associated Objects 为 UIImageView 添加 activityIndicator<br>date: 2016-03-16 15:21:37<br>desc: iTychooo.</p>
 <h2 id="tags"><a href="#tags" class="headerlink" title="tags:"></a>tags:</h2><p>在实现类似与微博或者微信的 <code>timeline</code> 功能时, 往往需要在 <code>UITableViewCell</code> 中利用 <code>UIImageView</code> 展示单张或多张图片, 这些图片的来源通常都是网络. 而一旦网络速度不稳定, cell 中的 imageView 异步加载图片的过程就会一直显示 backgroundColor. 用户对图片正在下载的情况全然不知. 而像 <code>SDWebImage</code> 和 <code>Kingfisher</code> 这样的第三方框架很好的解决了这种问题: 一方面可以显示一张 placeholderImage, 也可以显示一个 <code>UIActivityIndicatorView</code> 让用户感受到下载的进程. </p>
 <p>而实现 activityIndicatorView 的方法又有很多种, 我第一个想到的就是自定义一个 <code>UIView</code>, 在里面添加一个 <code>UIImageView</code> 和 一个 <code>UIActivityIndicatorView</code>. 之后使用这个自定义的 view 就可以很好的完成任务. 而最近我在使用 <code>Kingfisher</code> 时, 发现它利用 分类 的功能结合 runtime 的特性, 直接为 <code>UIImageView</code> 添加一个 indicatorView 的实例变量. </p>
 <p>通过 分类 -&gt; extension 不能添加新的实例变量,  但我们可以利用 runtime 的 Associated Objects 来弥补这一不足.</p>
@@ -95,7 +95,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/06/runtime/" data-id="civ68i9ff0005j95s58rq37tg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/06/runtime/" data-id="civ68lokv0005o75su9vdcamr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -138,7 +138,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/17/Stack-View的开始/" data-id="civ68i9eo0003j95s1dksqmtg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/03/17/Stack-View的开始/" data-id="civ68lokq0003o75sdxh6h1md" class="article-share-link">Share</a>
       
       
     </footer>
@@ -180,7 +180,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/16/CS193P-第五课笔记/" data-id="civ68i9eq0004j95s0alae27i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/03/16/CS193P-第五课笔记/" data-id="civ68lok80000o75s7etpy1jb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -221,7 +221,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/16/CS193P-第四课笔记/" data-id="civ68i9ea0000j95sb30za930" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/03/16/CS193P-第四课笔记/" data-id="civ68lokh0001o75sjk5ibbfk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -264,7 +264,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/16/Octopress的初级使用/" data-id="civ68i9eh0001j95sknwq45wx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/03/16/Octopress的初级使用/" data-id="civ68lokl0002o75sd3f4atzn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -309,7 +309,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/16/iOS-中-UIGestureRecognizer-手势的使用/" data-id="civ68i9el0002j95sjbvj35hq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/03/16/iOS-中-UIGestureRecognizer-手势的使用/" data-id="civ68loks0004o75soh09jocu" class="article-share-link">Share</a>
       
       
     </footer>

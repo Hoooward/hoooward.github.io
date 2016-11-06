@@ -5,19 +5,19 @@
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="title: 利用 Associated Objects 为 UIImageView 添加 activityIndicatordate: 2016-03-16 15:21:37
-tags:在实现类似与微博或者微信的 timeline 功能时, 往往需要在 UITableViewCell 中利用 UIImageView 展示单张或多张图片, 这些图片的来源通常都是网络. 而一旦网络速度不稳定, c">
+  <meta name="description" content="title: 利用 Associated Objects 为 UIImageView 添加 activityIndicatordate: 2016-03-16 15:21:37desc: iTychooo.
+tags:在实现类似与微博或者微信的 timeline 功能时, 往往需要在 UITableViewCell 中利用 UIImageView 展示单张或多张图片, 这些图片的来源通常都是网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://yoursite.com/2016/11/06/runtime/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="title: 利用 Associated Objects 为 UIImageView 添加 activityIndicatordate: 2016-03-16 15:21:37
-tags:在实现类似与微博或者微信的 timeline 功能时, 往往需要在 UITableViewCell 中利用 UIImageView 展示单张或多张图片, 这些图片的来源通常都是网络. 而一旦网络速度不稳定, c">
-<meta property="og:updated_time" content="2016-11-06T06:04:27.000Z">
+<meta property="og:description" content="title: 利用 Associated Objects 为 UIImageView 添加 activityIndicatordate: 2016-03-16 15:21:37desc: iTychooo.
+tags:在实现类似与微博或者微信的 timeline 功能时, 往往需要在 UITableViewCell 中利用 UIImageView 展示单张或多张图片, 这些图片的来源通常都是网络">
+<meta property="og:updated_time" content="2016-11-06T06:07:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="title: 利用 Associated Objects 为 UIImageView 添加 activityIndicatordate: 2016-03-16 15:21:37
-tags:在实现类似与微博或者微信的 timeline 功能时, 往往需要在 UITableViewCell 中利用 UIImageView 展示单张或多张图片, 这些图片的来源通常都是网络. 而一旦网络速度不稳定, c">
+<meta name="twitter:description" content="title: 利用 Associated Objects 为 UIImageView 添加 activityIndicatordate: 2016-03-16 15:21:37desc: iTychooo.
+tags:在实现类似与微博或者微信的 timeline 功能时, 往往需要在 UITableViewCell 中利用 UIImageView 展示单张或多张图片, 这些图片的来源通常都是网络">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -79,7 +79,7 @@ tags:在实现类似与微博或者微信的 timeline 功能时, 往往需要在
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<p>title: 利用 Associated Objects 为 UIImageView 添加 activityIndicator<br>date: 2016-03-16 15:21:37</p>
+<p>title: 利用 Associated Objects 为 UIImageView 添加 activityIndicator<br>date: 2016-03-16 15:21:37<br>desc: iTychooo.</p>
 <h2 id="tags"><a href="#tags" class="headerlink" title="tags:"></a>tags:</h2><p>在实现类似与微博或者微信的 <code>timeline</code> 功能时, 往往需要在 <code>UITableViewCell</code> 中利用 <code>UIImageView</code> 展示单张或多张图片, 这些图片的来源通常都是网络. 而一旦网络速度不稳定, cell 中的 imageView 异步加载图片的过程就会一直显示 backgroundColor. 用户对图片正在下载的情况全然不知. 而像 <code>SDWebImage</code> 和 <code>Kingfisher</code> 这样的第三方框架很好的解决了这种问题: 一方面可以显示一张 placeholderImage, 也可以显示一个 <code>UIActivityIndicatorView</code> 让用户感受到下载的进程. </p>
 <p>而实现 activityIndicatorView 的方法又有很多种, 我第一个想到的就是自定义一个 <code>UIView</code>, 在里面添加一个 <code>UIImageView</code> 和 一个 <code>UIActivityIndicatorView</code>. 之后使用这个自定义的 view 就可以很好的完成任务. 而最近我在使用 <code>Kingfisher</code> 时, 发现它利用 分类 的功能结合 runtime 的特性, 直接为 <code>UIImageView</code> 添加一个 indicatorView 的实例变量. </p>
 <p>通过 分类 -&gt; extension 不能添加新的实例变量,  但我们可以利用 runtime 的 Associated Objects 来弥补这一不足.</p>
@@ -100,7 +100,7 @@ tags:在实现类似与微博或者微信的 timeline 功能时, 往往需要在
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/06/runtime/" data-id="civ68i9ff0005j95s58rq37tg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/06/runtime/" data-id="civ68lokv0005o75su9vdcamr" class="article-share-link">Share</a>
       
       
     </footer>

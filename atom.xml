@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-11-08T11:54:34.000Z</updated>
+  <updated>2016-11-08T12:02:48.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,11 +20,11 @@
     <link href="http://yoursite.com/2016/11/08/%E4%BD%BF%E7%94%A8%20Swift%20%E4%BC%98%E9%9B%85%E7%9A%84%E7%BC%93%E5%AD%98%20Cell%20%E7%9A%84%E8%A1%8C%E9%AB%98%E4%B8%8E%20subviews%20%E7%9A%84%20frame/"/>
     <id>http://yoursite.com/2016/11/08/使用 Swift 优雅的缓存 Cell 的行高与 subviews 的 frame/</id>
     <published>2016-11-08T10:16:01.000Z</published>
-    <updated>2016-11-08T11:54:34.000Z</updated>
+    <updated>2016-11-08T12:02:48.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="使用-Swift-优雅的缓存-Cell-的行高与-subviews-的-frame"><a href="#使用-Swift-优雅的缓存-Cell-的行高与-subviews-的-frame" class="headerlink" title="使用 Swift 优雅的缓存 Cell 的行高与 subviews 的 frame"></a>使用 Swift 优雅的缓存 Cell 的行高与 subviews 的 frame</h1><p>TableView 与 CollectionView 无疑是 iOS 开发中使用最多的视图，他们往往负责顺序展示大量的数据当用户的手指不断的滑动，系统会反复加载数据，计算 frame。而一旦数据体积增大，计算 frame 的逻辑复杂，就会造成过多的性能浪费。解决这类问题的方法有很多. 最近在 Yep 代码中看到的方法，在应用到自己项目的时候感觉非常不错, 所以有了以下的记录总结.</p>
 <p>我们来看 Demo 要实现的效果。</p>
-<p><img src="media/14786001617397/IMG_0230.jpg" alt="IMG_0230"></p>
+<p><img src="![IMG_0230](http://7xrfzx.com1.z0.glb.clouddn.com/2016-11-08-IMG_0230.jpg" alt="IMG_0230">)</p>
 <p>既然要利用代码的方式实现这样的效果，我们现在分析一下实现的具体过程。</p>
 <ul>
 <li>图中是一个 TableViewController</li>

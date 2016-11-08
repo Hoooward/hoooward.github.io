@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-11-08T13:43:46.000Z</updated>
+  <updated>2016-11-08T14:55:50.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,11 +20,11 @@
     <link href="http://yoursite.com/2016/11/08/%E4%BD%BF%E7%94%A8%20Swift%20%E4%BC%98%E9%9B%85%E7%9A%84%E7%BC%93%E5%AD%98%20Cell%20%E7%9A%84%E8%A1%8C%E9%AB%98%E4%B8%8E%20subviews%20%E7%9A%84%20frame/"/>
     <id>http://yoursite.com/2016/11/08/使用 Swift 优雅的缓存 Cell 的行高与 subviews 的 frame/</id>
     <published>2016-11-08T10:16:01.000Z</published>
-    <updated>2016-11-08T13:43:46.000Z</updated>
+    <updated>2016-11-08T14:55:50.000Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="使用-Swift-优雅的缓存-cell-的行高与-subviews-的-layout"><a href="#使用-Swift-优雅的缓存-cell-的行高与-subviews-的-layout" class="headerlink" title="使用 Swift 优雅的缓存 cell 的行高与 subviews 的 layout"></a>使用 Swift 优雅的缓存 cell 的行高与 subviews 的 layout</h1><p>UITableView 与 UICollectionView 无疑是 iOS 开发中使用最多的视图控制器，它往往负责展示大量的数据. 伴随着用户的手指不断的滑动，系统会反复刷新UI, 加载所要展示的内容。而一旦数据体积增大，计算的逻辑复杂，就会造成过多的性能浪费。解决这类问题的方法有很多. 最近在 Yep 代码中看到的方法，在应用到自己项目的时候感觉非常不错, 所以有了以下的记录总结.</p>
-<p>我们来看 Demo 要实现的效果。</p>
-<p><img src="http://7xrfzx.com1.z0.glb.clouddn.com/2016-11-08-IMG_0230.jpg" alt=""><br><a id="more"></a><br>既然要利用代码的方式实现这样的效果，我们现在分析一下实现的具体过程。</p>
+    <content type="html"><![CDATA[<h1 id="在-Swift-中优雅的缓存-cell-的行高与-subviews-的-layout"><a href="#在-Swift-中优雅的缓存-cell-的行高与-subviews-的-layout" class="headerlink" title="在 Swift 中优雅的缓存 cell 的行高与 subviews 的 layout"></a>在 Swift 中优雅的缓存 cell 的行高与 subviews 的 layout</h1><p><code>UITableView</code> 与 <code>UICollectionView</code> 无疑是 iOS 开发中使用最多的视图控制器，它往往负责展示大量的数据. 伴随着用户的手指不断的滑动，系统会反复刷新UI, 加载所要展示的内容。而一旦数据体积增大，计算的逻辑复杂，就会造成过多的性能浪费。解决这类问题的方法有很多. 最近在 <code>Yep</code> 代码中看到的方法，在应用到自己项目的时候感觉非常不错, 所以有了以下的记录总结.</p>
+<p>首先看一下 Demo 要实现的效果<br><a id="more"></a><br><img src="http://7xrfzx.com1.z0.glb.clouddn.com/2016-11-08-IMG_0230.jpg" alt=""></p>
+<p>既然要利用代码的方式实现这样的效果，我们现在分析一下实现的具体过程。</p>
 <ul>
 <li>图中是一个 TableViewController</li>
 <li>有三种不同的 cell 样式</li>
@@ -52,9 +52,8 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;使用-Swift-优雅的缓存-cell-的行高与-subviews-的-layout&quot;&gt;&lt;a href=&quot;#使用-Swift-优雅的缓存-cell-的行高与-subviews-的-layout&quot; class=&quot;headerlink&quot; title=&quot;使用 Swift 优雅的缓存 cell 的行高与 subviews 的 layout&quot;&gt;&lt;/a&gt;使用 Swift 优雅的缓存 cell 的行高与 subviews 的 layout&lt;/h1&gt;&lt;p&gt;UITableView 与 UICollectionView 无疑是 iOS 开发中使用最多的视图控制器，它往往负责展示大量的数据. 伴随着用户的手指不断的滑动，系统会反复刷新UI, 加载所要展示的内容。而一旦数据体积增大，计算的逻辑复杂，就会造成过多的性能浪费。解决这类问题的方法有很多. 最近在 Yep 代码中看到的方法，在应用到自己项目的时候感觉非常不错, 所以有了以下的记录总结.&lt;/p&gt;
-&lt;p&gt;我们来看 Demo 要实现的效果。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xrfzx.com1.z0.glb.clouddn.com/2016-11-08-IMG_0230.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;
+      &lt;h1 id=&quot;在-Swift-中优雅的缓存-cell-的行高与-subviews-的-layout&quot;&gt;&lt;a href=&quot;#在-Swift-中优雅的缓存-cell-的行高与-subviews-的-layout&quot; class=&quot;headerlink&quot; title=&quot;在 Swift 中优雅的缓存 cell 的行高与 subviews 的 layout&quot;&gt;&lt;/a&gt;在 Swift 中优雅的缓存 cell 的行高与 subviews 的 layout&lt;/h1&gt;&lt;p&gt;&lt;code&gt;UITableView&lt;/code&gt; 与 &lt;code&gt;UICollectionView&lt;/code&gt; 无疑是 iOS 开发中使用最多的视图控制器，它往往负责展示大量的数据. 伴随着用户的手指不断的滑动，系统会反复刷新UI, 加载所要展示的内容。而一旦数据体积增大，计算的逻辑复杂，就会造成过多的性能浪费。解决这类问题的方法有很多. 最近在 &lt;code&gt;Yep&lt;/code&gt; 代码中看到的方法，在应用到自己项目的时候感觉非常不错, 所以有了以下的记录总结.&lt;/p&gt;
+&lt;p&gt;首先看一下 Demo 要实现的效果&lt;br&gt;
     
     </summary>
     
@@ -62,11 +61,11 @@
   </entry>
   
   <entry>
-    <title>如何在 Segue 跳转时避免直接使用字符串</title>
+    <title>使用 Segue 跳转时避免直接使用字符串</title>
     <link href="http://yoursite.com/2016/07/08/%E5%A6%82%E4%BD%95%E5%9C%A8%E8%BF%9B%E8%A1%8C-Segue-%E8%B7%B3%E8%BD%AC%E6%97%B6%E9%81%BF%E5%85%8D%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     <id>http://yoursite.com/2016/07/08/如何在进行-Segue-跳转时避免直接使用字符串/</id>
     <published>2016-07-08T13:22:08.000Z</published>
-    <updated>2016-11-08T14:32:36.000Z</updated>
+    <updated>2016-11-08T14:38:20.000Z</updated>
     
     <content type="html"><![CDATA[<p>Xcode 的代码提示是没有办法验证字符串 (如: “Tychooo”) 的输入正确的, 我们在使用 storyboard 创建 UI 时, 经常会使用到 segue 的 identifier 来进行 viewController 跳转. 对其进行封装, 可以很好的减少自己手残输入错误时 debug 的时间成本. 我们一起来看一下 WWDC 中的 Demo.</p>
 <p>我们首先定义一个协议 <code>SegueHandlerType</code>, 之后凡是需要用的 segue 跳转的 viewController 都需要循序此协议. </p>
@@ -95,6 +94,26 @@
       &lt;p&gt;Xcode 的代码提示是没有办法验证字符串 (如: “Tychooo”) 的输入正确的, 我们在使用 storyboard 创建 UI 时, 经常会使用到 segue 的 identifier 来进行 viewController 跳转. 对其进行封装, 可以很好的减少自己手残输入错误时 debug 的时间成本. 我们一起来看一下 WWDC 中的 Demo.&lt;/p&gt;
 &lt;p&gt;我们首先定义一个协议 &lt;code&gt;SegueHandlerType&lt;/code&gt;, 之后凡是需要用的 segue 跳转的 viewController 都需要循序此协议. &lt;/p&gt;
 &lt;figure class=&quot;highlight swift&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;protocol&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;SegueHandlerType&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    associatedtype &lt;span class=&quot;type&quot;&gt;SegueIdentifier&lt;/span&gt;: &lt;span class=&quot;type&quot;&gt;RawRepresentable&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo Support</title>
+    <link href="http://yoursite.com/2016/05/30/Hexo/"/>
+    <id>http://yoursite.com/2016/05/30/Hexo/</id>
+    <published>2016-05-30T14:40:51.000Z</published>
+    <updated>2016-11-08T14:57:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="Hexo-的文档结构"><a href="#Hexo-的文档结构" class="headerlink" title="Hexo 的文档结构"></a>Hexo 的文档结构</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">├── .deploy       #需要部署的文件</div><div class="line">├── node_modules  #<span class="type">Hexo</span>插件</div><div class="line">├── <span class="keyword">public</span>        #生成的静态网页文件</div><div class="line">├── scaffolds     #模板</div><div class="line">├── source        #博客正文和其他源文件, <span class="number">404</span> favicon <span class="type">CNAME</span> 等都应该放在这里</div><div class="line">|   ├── _drafts   #草稿</div><div class="line">|   └── _posts    #文章</div><div class="line">├── themes        #主题</div><div class="line">├── _config.yml   #全局配置文件</div><div class="line">└── package.json</div></pre></td></tr></table></figure>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"># <span class="type">Site</span> #站点信息</div><div class="line">title: blog <span class="type">Name</span> #标题</div><div class="line">subtitle: <span class="type">Subtitle</span> #副标题</div><div class="line">description: my blog desc #描述</div><div class="line">author: me #作者</div><div class="line">language: zh-<span class="type">CN</span> #语言</div><div class="line">timezone: <span class="type">Asia</span>/<span class="type">Shanghai</span> #时区</div><div class="line"></div><div class="line"># <span class="type">URL</span></div><div class="line">url: http:<span class="comment">//yoururl.com   #用于绑定域名, 其他的不需要配置</span></div><div class="line">root: /</div><div class="line">#permalink: :year/:month/:day/:title/</div><div class="line">permalink: posts/title.html</div><div class="line">permalink_defaults:</div><div class="line"></div><div class="line"># <span class="type">Directory</span> #目录</div><div class="line">source_dir: source #源文件</div><div class="line">public_dir: <span class="keyword">public</span> #生成的网页文件</div><div class="line">tag_dir: tags #标签</div><div class="line">archive_dir: archives #归档</div><div class="line">category_dir: categories #分类</div><div class="line">code_dir: downloads/code</div><div class="line">i18n_dir: :lang #国际化</div><div class="line">skip_render:</div><div class="line"></div><div class="line"># <span class="type">Writing</span> #写作</div><div class="line">new_post_name: :title.md #新文章标题</div><div class="line">default_layout: post #默认模板(post page photo draft)</div><div class="line">titlecase: <span class="literal">false</span> #标题转换成大写</div><div class="line">external_link: <span class="literal">true</span> #新标签页里打开连接</div><div class="line">filename_case: <span class="number">0</span></div><div class="line">render_drafts: <span class="literal">false</span></div><div class="line">post_asset_folder: <span class="literal">false</span></div><div class="line">relative_link: <span class="literal">false</span></div><div class="line">future: <span class="literal">true</span></div><div class="line">highlight: #语法高亮</div><div class="line">  enable: <span class="literal">true</span></div><div class="line">  line_number: <span class="literal">true</span> #显示行号</div><div class="line">  auto_detect: <span class="literal">true</span></div><div class="line">  tab_replace:</div><div class="line"></div><div class="line"># <span class="type">Category</span> &amp; <span class="type">Tag</span> #分类和标签</div><div class="line">default_category: uncategorized #默认分类</div><div class="line">category_map:</div><div class="line">tag_map:</div><div class="line"></div><div class="line"># <span class="type">Date</span> / <span class="type">Time</span> format #日期时间格式</div><div class="line">## http:<span class="comment">//momentjs.com/docs/#/displaying/format/</span></div><div class="line">date_format: <span class="type">YYYY</span>-<span class="type">MM</span>-<span class="type">DD</span></div><div class="line">time_format: <span class="type">HH</span>:mm:ss</div><div class="line"></div><div class="line"># <span class="type">Pagination</span> #分页</div><div class="line">per_page: <span class="number">10</span> #每页文章数, 设置成 <span class="number">0</span> 禁用分页</div><div class="line">pagination_dir: page</div><div class="line"></div><div class="line"># <span class="type">Extensions</span> #插件和主题</div><div class="line">## 插件: http:<span class="comment">//hexo.io/plugins/</span></div><div class="line">## 主题: http:<span class="comment">//hexo.io/themes/</span></div><div class="line">theme: next</div><div class="line"></div><div class="line"># <span class="type">Deployment</span> #部署, 同时发布在 <span class="type">GitHub</span> 和 <span class="type">GitCafe</span> 上面</div><div class="line">deploy:</div><div class="line">- type: git</div><div class="line">  repo: git@gitcafe.com:username/username.git,gitcafe-pages</div><div class="line">- type: git</div><div class="line">  repo: git@github.com:username/username.github.io.git,master</div><div class="line"></div><div class="line"># <span class="type">Disqus</span> #<span class="type">Disqus</span>评论系统</div><div class="line">disqus_shortname: </div><div class="line"></div><div class="line">plugins: #插件，例如生成 <span class="type">RSS</span> 和站点地图的</div><div class="line">- hexo-generator-feed</div><div class="line">- hexo-generator-sitemap</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;Hexo-的文档结构&quot;&gt;&lt;a href=&quot;#Hexo-的文档结构&quot; class=&quot;headerlink&quot; title=&quot;Hexo 的文档结构&quot;&gt;&lt;/a&gt;Hexo 的文档结构&lt;/h4&gt;&lt;figure class=&quot;highlight swift&quot;&gt;&lt;table&gt;&lt;t
     
     </summary>
     

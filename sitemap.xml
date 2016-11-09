@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2016/05/30/Hexo/</loc>
+    <loc>http://yoursite.com/2016/07/08/%E4%BD%BF%E7%94%A8%20Swift%20%E4%BC%98%E9%9B%85%E7%9A%84%E7%BC%93%E5%AD%98%20Cell%20%E7%9A%84%E8%A1%8C%E9%AB%98%E4%B8%8E%20subviews%20%E7%9A%84%20frame/</loc>
     
-    <lastmod>2016-11-08T14:57:29.000Z</lastmod>
+    <lastmod>2016-11-09T13:06:30.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2016/11/08/%E4%BD%BF%E7%94%A8%20Swift%20%E4%BC%98%E9%9B%85%E7%9A%84%E7%BC%93%E5%AD%98%20Cell%20%E7%9A%84%E8%A1%8C%E9%AB%98%E4%B8%8E%20subviews%20%E7%9A%84%20frame/</loc>
+    <loc>http://yoursite.com/2016/10/20/2016-11-09/</loc>
     
-    <lastmod>2016-11-08T14:55:50.000Z</lastmod>
+    <lastmod>2016-11-09T13:06:16.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/05/30/Hexo/</loc>
+    
+    <lastmod>2016-11-08T14:57:29.000Z</lastmod>
     
   </url>
   

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-11-11T15:33:09.000Z</updated>
+  <updated>2016-11-11T15:33:46.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2016/10/30/%E9%9A%90%E8%97%8FNavigationBar%E5%BA%95%E9%83%A8%E7%9A%84%E5%AE%9E%E7%BA%BF/"/>
     <id>http://yoursite.com/2016/10/30/隐藏NavigationBar底部的实线/</id>
     <published>2016-10-30T08:44:00.000Z</published>
-    <updated>2016-11-11T15:33:09.000Z</updated>
+    <updated>2016-11-11T15:33:46.000Z</updated>
     
     <content type="html"><![CDATA[<p>在自己实现的项目中需要隐藏掉 UINavigtionBar 底部的实线, 并在底部添加一个外观一样的 UIView, 用来实现为 NavigationBar “增高”的功能. 之前在 iOS9 中使用的方法失效了. Google 了一下找到的通用的办法.<br><a id="more"></a><br>我们将这个功能写在 <code>UINavigationController</code> 的 extension 中. 首先利用简单的递归找到底部那条实线.</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">UINavigationController</span> </span>&#123; </div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">navigationBarLine</span><span class="params">(view: UIView)</span></span> -&gt; <span class="type">UIView</span>? &#123;</div><div class="line">    </div><div class="line">        <span class="keyword">if</span> view.isKind(of: <span class="type">UIImageView</span>.classForCoder()) </div><div class="line">        &amp;&amp; view.bounds.size.height &lt;= <span class="number">1.0</span> &#123;</div><div class="line">            <span class="keyword">return</span> view</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> view <span class="keyword">in</span> view.subviews &#123;</div><div class="line">            </div><div class="line">            <span class="keyword">if</span> <span class="keyword">let</span> imageView = navigationBarLine(view: view) &#123;</div><div class="line">                <span class="keyword">return</span> imageView</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">    &#125;</div><div class="line"> </div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -70,11 +70,11 @@
   </entry>
   
   <entry>
-    <title>实现一个简单的 HUD 控制器</title>
+    <title>封装一个简单的 HUD 视图</title>
     <link href="http://yoursite.com/2016/08/16/%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84HUD/"/>
     <id>http://yoursite.com/2016/08/16/实现一个简单的HUD/</id>
     <published>2016-08-16T07:21:37.000Z</published>
-    <updated>2016-11-11T15:19:13.000Z</updated>
+    <updated>2016-11-11T15:34:43.000Z</updated>
     
     <content type="html"><![CDATA[<p>开发中我们通常在 App 长时间加载某些数据的时候需要展示 HUD 视图，告知用户当前 App 的状态。Apple 为我们提供了 <code>UIAlertView</code> <code>UIActivityView</code> 方便我们在必要的时候提醒用户。 但通常它们提供的 API 无法让我们做针对性的自定义，今天我们来实现一个简单的自定义 HUD。</p>
 <p>首先我们先看一下在 App 中的实际运行效果。</p>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-11-09T13:08:50.000Z</updated>
+  <updated>2016-11-11T15:32:08.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>在 iOS10 中隐藏 NavigationBar 底部的实线.</title>
+    <link href="http://yoursite.com/2016/10/30/%E9%9A%90%E8%97%8FNavigationBar%E5%BA%95%E9%83%A8%E7%9A%84%E5%AE%9E%E7%BA%BF/"/>
+    <id>http://yoursite.com/2016/10/30/隐藏NavigationBar底部的实线/</id>
+    <published>2016-10-30T08:44:00.000Z</published>
+    <updated>2016-11-11T15:32:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在自己实现的项目中需要隐藏掉 UINavigtionBar 底部的实线, 并在底部添加一个外观一样的 UIView, 用来实现为 NavigationBar “增高”的功能. 之前在 iOS9 中使用的方法失效了. Google 了一下找到的通用的办法.</p>
+<p>我们将这个功能写在 <code>UINavigationController</code> 的 extension 中. 首先利用简单的递归找到底部那条实线.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">UINavigationController</span> </span>&#123; </div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">navigationBarLine</span><span class="params">(view: UIView)</span></span> -&gt; <span class="type">UIView</span>? &#123;</div><div class="line">    </div><div class="line">        <span class="keyword">if</span> view.isKind(of: <span class="type">UIImageView</span>.classForCoder()) </div><div class="line">        &amp;&amp; view.bounds.size.height &lt;= <span class="number">1.0</span> &#123;</div><div class="line">            <span class="keyword">return</span> view</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> view <span class="keyword">in</span> view.subviews &#123;</div><div class="line">            </div><div class="line">            <span class="keyword">if</span> <span class="keyword">let</span> imageView = navigationBarLine(view: view) &#123;</div><div class="line">                <span class="keyword">return</span> imageView</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">    &#125;</div><div class="line"> </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>之后我们在 extension 中定义一个 <code>navigationBarLine</code> 的计算属性, 方便外部访问.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">var</span> navigationBarLine: <span class="type">UIImageView</span> &#123;</div><div class="line">     <span class="keyword">return</span> navigationBarLine(view: <span class="keyword">self</span>.navigationBar) <span class="keyword">as</span>! <span class="type">UIImageView</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>OK! Done.<br>这样我们就可以在需要的时候直接访问 <code>navigationBarLine</code> 属性来将其隐藏了.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在自己实现的项目中需要隐藏掉 UINavigtionBar 底部的实线, 并在底部添加一个外观一样的 UIView, 用来实现为 NavigationBar “增高”的功能. 之前在 iOS9 中使用的方法失效了. Google 了一下找到的通用的办法.&lt;/p&gt;
+&lt;p&gt;我们
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>刷新 UITableView &amp; UICollectionView</title>
@@ -86,6 +111,46 @@
   </entry>
   
   <entry>
+    <title>使用 Segue 跳转时避免直接使用字符串</title>
+    <link href="http://yoursite.com/2016/07/08/%E5%A6%82%E4%BD%95%E5%9C%A8%E8%BF%9B%E8%A1%8C-Segue-%E8%B7%B3%E8%BD%AC%E6%97%B6%E9%81%BF%E5%85%8D%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+    <id>http://yoursite.com/2016/07/08/如何在进行-Segue-跳转时避免直接使用字符串/</id>
+    <published>2016-07-08T13:22:08.000Z</published>
+    <updated>2016-11-08T14:38:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Xcode 的代码提示是没有办法验证字符串 (如: “Tychooo”) 的输入正确的, 我们在使用 storyboard 创建 UI 时, 经常会使用到 segue 的 identifier 来进行 viewController 跳转. 对其进行封装, 可以很好的减少自己手残输入错误时 debug 的时间成本. 我们一起来看一下 WWDC 中的 Demo.</p>
+<p>我们首先定义一个协议 <code>SegueHandlerType</code>, 之后凡是需要用的 segue 跳转的 viewController 都需要循序此协议. </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">SegueHandlerType</span> </span>&#123;</div><div class="line">    associatedtype <span class="type">SegueIdentifier</span>: <span class="type">RawRepresentable</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>在协议中指定一个关联类型 <code>RawRepresentable</code>, 已此来让我们可以对 segue 的 identifier 进行枚举.</p>
+<p>接下来实现该协议的具体内容, 在此我们希望凡是循序此协议的类, 必须是 UIViewController 的子类, 同时限定 SegueIdentifier 关联类型的 rawValue 必须是 String 类型.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">SegueHandlerType</span> <span class="title">where</span> <span class="title">Self</span>: <span class="title">UIViewController</span>, </span></div><div class="line"><span class="title">SegueIdentifier</span>.<span class="title">RawValue</span> == <span class="title">String</span> &#123;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>做好这些限定, 我们来封装 <code>performSegue</code> 方法. 在协议中实现如下方法. </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">performSegue</span><span class="params">(identifier: SegueIdentifier, sender: AnyObject?)</span></span> &#123;</div><div class="line">        performSegue(withIdentifier: identifier.rawValue, sender: sender)</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>OK, Done!<br>我们在 UIViewController 中使用时需要定义一个关联类型是 String 的枚举. 来看一下示例.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseCollectionViewController</span>: <span class="title">UICollectionViewController</span>, </span></div><div class="line"><span class="title">SegueHandlerType</span> &#123;</div><div class="line"></div><div class="line">  <span class="class"><span class="keyword">enum</span> <span class="title">SegueIdentifier</span>: <span class="title">String</span> </span>&#123;</div><div class="line">        <span class="keyword">case</span> showFormulaDetail = <span class="string">"ShowFormulaDetail"</span></div><div class="line">        <span class="keyword">case</span> showAddFormula = <span class="string">"ShowAddFormula"</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>而在进行 segue 跳转时, 我们就可以直接使用协议中的 <code>performSegue</code> 方法了.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">self</span>.performSegue(identifier: <span class="type">SegueIdentifier</span>.showFormulaDetail, sender: <span class="literal">nil</span>)</div></pre></td></tr></table></figure>
+<p>虽然表面上看起来似乎我们将问题复杂化了, 但在结构相对复杂的控制器中, 频繁手动输入字符串出错时, Xcode 又不能未我们提供错误提醒. 无疑增加了我们 debug 的时间成本.</p>
+<p>接下来我们来实现另外一个与 segue 跳转相关的常用方法的封装 <code>func prepare(for segue: UIStoryboardSegue, sender: Any?)</code>, 我们在之前定义的协议中实现下面的方法.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">segueIdentifier</span><span class="params">(<span class="keyword">for</span> segue: UIStoryboardSegue)</span></span> -&gt; <span class="type">SegueIdentifier</span> &#123;</div><div class="line">       <span class="keyword">guard</span></div><div class="line">            <span class="keyword">let</span> identifier = segue.identifier,</div><div class="line">            <span class="keyword">let</span> segueIdentifier = <span class="type">SegueIdentifier</span>(rawValue: identifier) <span class="keyword">else</span> &#123;</div><div class="line">                  <span class="built_in">fatalError</span>(<span class="string">"无效的 Segue Identifier"</span>)</div><div class="line">        &#125;</div><div class="line">       <span class="keyword">return</span> segueIdentifier</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>上面的方法接受一个 segue 实例, 判断其 identifier 是否与我们在 viewController 中定义的 case 相对应. 如果没有, 将在控制台输出 “无效的 Segue Identifier” .</p>
+<p>我们来看一下在 viewController 中实际的应用.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">prepare</span><span class="params">(<span class="keyword">for</span> segue: UIStoryboardSegue, sender: Any?)</span></span> &#123;</div><div class="line"></div><div class="line">    <span class="keyword">switch</span> segueIdentifier(<span class="keyword">for</span>: segue) &#123;</div><div class="line">    </div><div class="line">        <span class="keyword">case</span> .showFormulaDetail:</div><div class="line">            <span class="keyword">let</span> vc = segue.destination <span class="keyword">as</span>! <span class="type">FormulaDetailViewController</span></div><div class="line">           </div><div class="line">        <span class="keyword">case</span> .showAddFormula:</div><div class="line">            <span class="keyword">let</span> vc = segue.destination <span class="keyword">as</span>! <span class="type">NewFormulaViewController</span></div><div class="line">         </div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>这样我们就可以很方便的枚举不同的 segue 了, 并且当我们输入错误的时候, Xcode 也能准确的报告问题所在. </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Xcode 的代码提示是没有办法验证字符串 (如: “Tychooo”) 的输入正确的, 我们在使用 storyboard 创建 UI 时, 经常会使用到 segue 的 identifier 来进行 viewController 跳转. 对其进行封装, 可以很好的减少自己手残输入错误时 debug 的时间成本. 我们一起来看一下 WWDC 中的 Demo.&lt;/p&gt;
+&lt;p&gt;我们首先定义一个协议 &lt;code&gt;SegueHandlerType&lt;/code&gt;, 之后凡是需要用的 segue 跳转的 viewController 都需要循序此协议. &lt;/p&gt;
+&lt;figure class=&quot;highlight swift&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;protocol&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;SegueHandlerType&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    associatedtype &lt;span class=&quot;type&quot;&gt;SegueIdentifier&lt;/span&gt;: &lt;span class=&quot;type&quot;&gt;RawRepresentable&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>在 Swift 中优雅的缓存 cell 的行高与 subviews 的 layout</title>
     <link href="http://yoursite.com/2016/07/08/%E4%BD%BF%E7%94%A8%20Swift%20%E4%BC%98%E9%9B%85%E7%9A%84%E7%BC%93%E5%AD%98%20Cell%20%E7%9A%84%E8%A1%8C%E9%AB%98%E4%B8%8E%20subviews%20%E7%9A%84%20frame/"/>
     <id>http://yoursite.com/2016/07/08/使用 Swift 优雅的缓存 Cell 的行高与 subviews 的 frame/</id>
@@ -124,46 +189,6 @@
     
       &lt;p&gt;&lt;code&gt;UITableView&lt;/code&gt; 与 &lt;code&gt;UICollectionView&lt;/code&gt; 无疑是 iOS 开发中使用最多的视图控制器，它往往负责展示大量的数据. 伴随着用户的手指不断的滑动，系统会反复刷新UI, 加载所要展示的内容。而一旦数据体积增大，计算的逻辑复杂，就会造成过多的性能浪费。解决这类问题的方法有很多. 最近在 &lt;code&gt;Yep&lt;/code&gt; 代码中看到的方法，在应用到自己项目的时候感觉非常不错, 所以有了以下的记录总结.&lt;/p&gt;
 &lt;p&gt;首先看一下 Demo 要实现的效果&lt;br&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>使用 Segue 跳转时避免直接使用字符串</title>
-    <link href="http://yoursite.com/2016/07/08/%E5%A6%82%E4%BD%95%E5%9C%A8%E8%BF%9B%E8%A1%8C-Segue-%E8%B7%B3%E8%BD%AC%E6%97%B6%E9%81%BF%E5%85%8D%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    <id>http://yoursite.com/2016/07/08/如何在进行-Segue-跳转时避免直接使用字符串/</id>
-    <published>2016-07-08T13:22:08.000Z</published>
-    <updated>2016-11-08T14:38:20.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Xcode 的代码提示是没有办法验证字符串 (如: “Tychooo”) 的输入正确的, 我们在使用 storyboard 创建 UI 时, 经常会使用到 segue 的 identifier 来进行 viewController 跳转. 对其进行封装, 可以很好的减少自己手残输入错误时 debug 的时间成本. 我们一起来看一下 WWDC 中的 Demo.</p>
-<p>我们首先定义一个协议 <code>SegueHandlerType</code>, 之后凡是需要用的 segue 跳转的 viewController 都需要循序此协议. </p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">SegueHandlerType</span> </span>&#123;</div><div class="line">    associatedtype <span class="type">SegueIdentifier</span>: <span class="type">RawRepresentable</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>在协议中指定一个关联类型 <code>RawRepresentable</code>, 已此来让我们可以对 segue 的 identifier 进行枚举.</p>
-<p>接下来实现该协议的具体内容, 在此我们希望凡是循序此协议的类, 必须是 UIViewController 的子类, 同时限定 SegueIdentifier 关联类型的 rawValue 必须是 String 类型.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">SegueHandlerType</span> <span class="title">where</span> <span class="title">Self</span>: <span class="title">UIViewController</span>, </span></div><div class="line"><span class="title">SegueIdentifier</span>.<span class="title">RawValue</span> == <span class="title">String</span> &#123;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>做好这些限定, 我们来封装 <code>performSegue</code> 方法. 在协议中实现如下方法. </p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">performSegue</span><span class="params">(identifier: SegueIdentifier, sender: AnyObject?)</span></span> &#123;</div><div class="line">        performSegue(withIdentifier: identifier.rawValue, sender: sender)</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>OK, Done!<br>我们在 UIViewController 中使用时需要定义一个关联类型是 String 的枚举. 来看一下示例.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseCollectionViewController</span>: <span class="title">UICollectionViewController</span>, </span></div><div class="line"><span class="title">SegueHandlerType</span> &#123;</div><div class="line"></div><div class="line">  <span class="class"><span class="keyword">enum</span> <span class="title">SegueIdentifier</span>: <span class="title">String</span> </span>&#123;</div><div class="line">        <span class="keyword">case</span> showFormulaDetail = <span class="string">"ShowFormulaDetail"</span></div><div class="line">        <span class="keyword">case</span> showAddFormula = <span class="string">"ShowAddFormula"</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>而在进行 segue 跳转时, 我们就可以直接使用协议中的 <code>performSegue</code> 方法了.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">self</span>.performSegue(identifier: <span class="type">SegueIdentifier</span>.showFormulaDetail, sender: <span class="literal">nil</span>)</div></pre></td></tr></table></figure>
-<p>虽然表面上看起来似乎我们将问题复杂化了, 但在结构相对复杂的控制器中, 频繁手动输入字符串出错时, Xcode 又不能未我们提供错误提醒. 无疑增加了我们 debug 的时间成本.</p>
-<p>接下来我们来实现另外一个与 segue 跳转相关的常用方法的封装 <code>func prepare(for segue: UIStoryboardSegue, sender: Any?)</code>, 我们在之前定义的协议中实现下面的方法.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">segueIdentifier</span><span class="params">(<span class="keyword">for</span> segue: UIStoryboardSegue)</span></span> -&gt; <span class="type">SegueIdentifier</span> &#123;</div><div class="line">       <span class="keyword">guard</span></div><div class="line">            <span class="keyword">let</span> identifier = segue.identifier,</div><div class="line">            <span class="keyword">let</span> segueIdentifier = <span class="type">SegueIdentifier</span>(rawValue: identifier) <span class="keyword">else</span> &#123;</div><div class="line">                  <span class="built_in">fatalError</span>(<span class="string">"无效的 Segue Identifier"</span>)</div><div class="line">        &#125;</div><div class="line">       <span class="keyword">return</span> segueIdentifier</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>上面的方法接受一个 segue 实例, 判断其 identifier 是否与我们在 viewController 中定义的 case 相对应. 如果没有, 将在控制台输出 “无效的 Segue Identifier” .</p>
-<p>我们来看一下在 viewController 中实际的应用.</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">prepare</span><span class="params">(<span class="keyword">for</span> segue: UIStoryboardSegue, sender: Any?)</span></span> &#123;</div><div class="line"></div><div class="line">    <span class="keyword">switch</span> segueIdentifier(<span class="keyword">for</span>: segue) &#123;</div><div class="line">    </div><div class="line">        <span class="keyword">case</span> .showFormulaDetail:</div><div class="line">            <span class="keyword">let</span> vc = segue.destination <span class="keyword">as</span>! <span class="type">FormulaDetailViewController</span></div><div class="line">           </div><div class="line">        <span class="keyword">case</span> .showAddFormula:</div><div class="line">            <span class="keyword">let</span> vc = segue.destination <span class="keyword">as</span>! <span class="type">NewFormulaViewController</span></div><div class="line">         </div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>这样我们就可以很方便的枚举不同的 segue 了, 并且当我们输入错误的时候, Xcode 也能准确的报告问题所在. </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Xcode 的代码提示是没有办法验证字符串 (如: “Tychooo”) 的输入正确的, 我们在使用 storyboard 创建 UI 时, 经常会使用到 segue 的 identifier 来进行 viewController 跳转. 对其进行封装, 可以很好的减少自己手残输入错误时 debug 的时间成本. 我们一起来看一下 WWDC 中的 Demo.&lt;/p&gt;
-&lt;p&gt;我们首先定义一个协议 &lt;code&gt;SegueHandlerType&lt;/code&gt;, 之后凡是需要用的 segue 跳转的 viewController 都需要循序此协议. &lt;/p&gt;
-&lt;figure class=&quot;highlight swift&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;protocol&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;SegueHandlerType&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    associatedtype &lt;span class=&quot;type&quot;&gt;SegueIdentifier&lt;/span&gt;: &lt;span class=&quot;type&quot;&gt;RawRepresentable&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     

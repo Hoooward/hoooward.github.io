@@ -43,16 +43,14 @@
   </entry>
   
   <entry>
-    <title>实现 StarRatingView 控件.</title>
+    <title>实现 StarRatingView 控件</title>
     <link href="http://yoursite.com/2016/10/28/2016-11-12/"/>
     <id>http://yoursite.com/2016/10/28/2016-11-12/</id>
     <published>2016-10-28T07:44:00.000Z</published>
-    <updated>2016-11-12T05:05:54.000Z</updated>
+    <updated>2016-11-12T05:10:11.000Z</updated>
     
     <content type="html"><![CDATA[<p>自已项目中需要使用一个类此为 iTunes 中音乐评星的功能. 在 gihub 中找了一些发现都太繁琐. 本着一切从简, 能自己动手就自己动手的原则, 就参照开源的实现自己写了一个.</p>
-<p>先来看看具体的需求. 这个 starRatingView 有两种状态, 分别是可编辑和不可编辑的状态. UI结构是一个 contaninerView 中拥有 5 个 UIImageView, 根据用户手指的移动 point, 为相应的 UIImageView 填充高亮或普通的 star 图片.</p>
-<p><img src="http://7xrfzx.com1.z0.glb.clouddn.com/2016-11-12-1.01.45.png" alt="1.01.45"></p>
-<a id="more"></a>
+<p>先来看看图片中我们要实现的控件.<br><img src="http://7xrfzx.com1.z0.glb.clouddn.com/2016-11-12-1.01.45.png" alt="1.01.45"><br>这个 <code>StarRatingView</code> 有两种状态, 分别是可编辑和不可编辑的状态. UI结构是一个 baseView 中拥有 5 个 <code>UIImageView</code>, 根据用户手指的移动 <code>CGPoint</code>, 为相应的 <code>UIImageView</code> 填充高亮或普通的 star 图片.<br><a id="more"></a></p>
 <p>首先, 我们创建一个 <code>StarRatingView</code> 的类, 它继承自 UIView. </p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">StarRatingView</span>: <span class="title">UIView</span> </span>&#123;</div><div class="line"></div><div class="line"> <span class="comment">// 普通的 star 图片</span></div><div class="line"> <span class="keyword">private</span> <span class="keyword">var</span> notSelectedImage: <span class="type">UIImage</span> = <span class="type">UIImage</span>(named: <span class="string">"star_empty"</span>)! &#123;</div><div class="line">        <span class="keyword">didSet</span> &#123;</div><div class="line">            refresh()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"> <span class="comment">// 高亮的 star 图片  </span></div><div class="line"> <span class="keyword">private</span> <span class="keyword">var</span> halfSeletedImage: <span class="type">UIImage</span> = <span class="type">UIImage</span>(named: <span class="string">"star_full"</span>)! &#123;</div><div class="line">        <span class="keyword">didSet</span> &#123;</div><div class="line">            refresh()</div><div class="line">        &#125;</div><div class="line">    &#125; </div><div class="line"> </div><div class="line"> <span class="comment">// 是否可以编辑</span></div><div class="line"> <span class="meta">@IBInspectable</span> <span class="keyword">var</span> editable: <span class="type">Bool</span> = <span class="literal">true</span></div><div class="line"> </div><div class="line"> <span class="comment">// 当前高亮 star 的数量.</span></div><div class="line"> <span class="meta">@IBInspectable</span> <span class="keyword">var</span> rating: <span class="type">Int</span> = <span class="number">0</span> &#123;</div><div class="line">        <span class="keyword">didSet</span> &#123;</div><div class="line">            refresh()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line"> <span class="comment">// 用来存储 StarRatingView 中所有的 星星 imageView</span></div><div class="line"> <span class="keyword">private</span> <span class="keyword">var</span> imageViews = [<span class="type">UIImageView</span>]()</div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>接着我们定义一个<code>maxRating</code>属性, 它用来表示最大星星数量, 默认值是 5. 在它的 <code>didSet</code> 方法中, 我们进行 UIImageView 的初始化, 创建相应个数的 UIImageView.</p>
@@ -72,8 +70,7 @@
     <summary type="html">
     
       &lt;p&gt;自已项目中需要使用一个类此为 iTunes 中音乐评星的功能. 在 gihub 中找了一些发现都太繁琐. 本着一切从简, 能自己动手就自己动手的原则, 就参照开源的实现自己写了一个.&lt;/p&gt;
-&lt;p&gt;先来看看具体的需求. 这个 starRatingView 有两种状态, 分别是可编辑和不可编辑的状态. UI结构是一个 contaninerView 中拥有 5 个 UIImageView, 根据用户手指的移动 point, 为相应的 UIImageView 填充高亮或普通的 star 图片.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xrfzx.com1.z0.glb.clouddn.com/2016-11-12-1.01.45.png&quot; alt=&quot;1.01.45&quot;&gt;&lt;/p&gt;
+&lt;p&gt;先来看看图片中我们要实现的控件.&lt;br&gt;&lt;img src=&quot;http://7xrfzx.com1.z0.glb.clouddn.com/2016-11-12-1.01.45.png&quot; alt=&quot;1.01.45&quot;&gt;&lt;br&gt;这个 &lt;code&gt;StarRatingView&lt;/code&gt; 有两种状态, 分别是可编辑和不可编辑的状态. UI结构是一个 baseView 中拥有 5 个 &lt;code&gt;UIImageView&lt;/code&gt;, 根据用户手指的移动 &lt;code&gt;CGPoint&lt;/code&gt;, 为相应的 &lt;code&gt;UIImageView&lt;/code&gt; 填充高亮或普通的 star 图片.&lt;br&gt;
     
     </summary>
     

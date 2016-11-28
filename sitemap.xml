@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2016/11/28/git%E6%80%BB%E7%BB%93/</loc>
+    
+    <lastmod>2016-11-28T03:15:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2016/10/11/ActionSheetView/</loc>
     
     <lastmod>2016-11-13T05:47:22.000Z</lastmod>

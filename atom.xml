@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-02-19T12:09:01.000Z</updated>
+  <updated>2017-02-19T12:32:09.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,22 +16,17 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>const&amp;static&amp;extern</title>
-    <link href="http://yoursite.com/2017/02/18/2017-02-18/"/>
-    <id>http://yoursite.com/2017/02/18/2017-02-18/</id>
-    <published>2017-02-18T07:44:00.000Z</published>
-    <updated>2017-02-19T12:09:01.000Z</updated>
+    <title>编写高质量的 Objective-C 代码 2. 对象、消息、运行时</title>
+    <link href="http://yoursite.com/2017/02/19/%E5%AF%B9%E8%B1%A1%E3%80%81%E6%B6%88%E6%81%AF%E3%80%81%E8%BF%90%E8%A1%8C%E6%97%B6%20/"/>
+    <id>http://yoursite.com/2017/02/19/对象、消息、运行时 /</id>
+    <published>2017-02-19T12:19:00.000Z</published>
+    <updated>2017-02-19T12:32:09.000Z</updated>
     
-    <content type="html"><![CDATA[<p>因为好久没写 OC 代码了，回头重看 《Effective Objective-C 编写高质量 iOS 与 OS X 代码的 52 个有效方法》，总结一些写 OC 时的技巧。</p>
-<h3 id="熟悉-Objective-C"><a href="#熟悉-Objective-C" class="headerlink" title="熟悉 Objective-C"></a>熟悉 Objective-C</h3><h5 id="1-除非必要，否则不要引入头文件"><a href="#1-除非必要，否则不要引入头文件" class="headerlink" title="1. 除非必要，否则不要引入头文件"></a>1. 除非必要，否则不要引入头文件</h5><p>一般来说，应再某个类的头文件中使用向前声明来提及某个类，并在实现文件（.m）中引入那些类的头文件，以降低类之间的耦合。<br>当无法使用向前声明时，比如要声明某个类遵循某个协议。在这种情况下，尽量把<code>该类遵循某协议</code>的声明移入<code>class-continuation 分类</code>中。如果不行的话，就把某协议单独放在一个头文件中，然后将其引入。</p>
-<h5 id="2-尽量使用字面量创建数组、字典、字符串、数值"><a href="#2-尽量使用字面量创建数组、字典、字符串、数值" class="headerlink" title="2. 尽量使用字面量创建数组、字典、字符串、数值"></a>2. 尽量使用字面量创建数组、字典、字符串、数值</h5><p>与常规方法相比更加简明。同时，如果值中有 nil，则会抛出异常，方便定位问题。而使用常规方法遇到 nil 会自动结束向集合添加数值。</p>
-<h5 id="3-避免使用-define-预处理命令定义常量"><a href="#3-避免使用-define-预处理命令定义常量" class="headerlink" title="3. 避免使用 #define 预处理命令定义常量"></a>3. 避免使用 #define 预处理命令定义常量</h5><p>因为这样定义出来的常量不含类型信息，仅做预编译阶段的替换操作。无法利用编译器产生警告信息。<br>应该选择在实现文件中使用 <code>static（定义作用域） const（readOnly）</code> 来定义只在编译单元内可见的常量，此常量不在全局符号表中，无需加前缀。<br>如果需要定义全局常量，选择在头文件中使用 <code>extern</code>.并在相关实现文件中初始化其值，因为这种常量会出现再全局符号表中，所以应该加前缀，通常使用与之相关的类名做前缀。（OC 没有命名空间）。</p>
-<h5 id="4-使用枚举表示状态、选项、状态码"><a href="#4-使用枚举表示状态、选项、状态码" class="headerlink" title="4. 使用枚举表示状态、选项、状态码"></a>4. 使用枚举表示状态、选项、状态码</h5><p>应该使用枚举来表示状态机的状态、传递给方法的选择以及状态码等值，给这些值起个易懂的名字。<br>如果把传递给某个方法的选项用枚举表示，而多个选择又可以同时使用，那么就将各选项值定义为 2 的幂，以便通过按位或操作将其组合起来。<br>用 <code>NS_ENUM</code> 与 <code>NS_OPTIONS</code> 宏来定义枚举类型，并指明底层数据类型。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">typedef NS_ENUM(NSUInteger, EOCConnectionState) &#123;</div><div class="line">	EOCConnectionStateDisconnected,</div><div class="line">	EOCConnectionStateConnecting,</div><div class="line">	EOCConnectionStateConnected,</div><div class="line">&#125;</div><div class="line"></div><div class="line">typedef NS_OPTIONS(NSUInteger, EOCPermittedDirection) &#123;</div><div class="line">	EOCPermittedDirectionUp    = 1 &lt;&lt; 0,</div><div class="line">	EOCPermittedDirectionDown  = 1 &lt;&lt; 1,</div><div class="line">	EOCPermittedDirectionLeft  = 1 &lt;&lt; 2,</div><div class="line">	EOCPermittedDirectionRight = 1 &lt;&lt; 3,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="对象、消息、运行时"><a href="#对象、消息、运行时" class="headerlink" title="对象、消息、运行时"></a>对象、消息、运行时</h3><p>####1. 理解属性这一概念<br>使用 @property 语法来定义对象中所封装的数据。<br>通过 <code>assign strong weak copy unsafe_unretained</code>定义存储数据所需的正确语意。<br>开发 iOS 程序时应该使用 <code>nonatomic</code> 属性，因为 <code>atomic</code> 属性会严重影响性能。</p>
+    <content type="html"><![CDATA[<p>####1. 理解属性这一概念<br>使用 @property 语法来定义对象中所封装的数据。<br>通过 <code>assign strong weak copy unsafe_unretained</code>定义存储数据所需的正确语义。<br>开发 iOS 程序时应该使用 <code>nonatomic</code> 属性，因为 <code>atomic</code> 属性会严重影响性能。</p>
 <h4 id="2-在对象内部尽量直接访问实例变量"><a href="#2-在对象内部尽量直接访问实例变量" class="headerlink" title="2. 在对象内部尽量直接访问实例变量"></a>2. 在对象内部尽量直接访问实例变量</h4><p>在对象内部读取数据时，应该直接通过实例变量来读，而写入数据时，则应该通过属性来写，以确保其声明的内存管理语意。<br>在初始化和 <code>dealloc</code> 方法中，总是应该直接通过实例变量来读取数据。<br>在使用惰性初始化时，需要通过属性来读取数据。</p>
 <h4 id="3-理解-对象等同性-这一概念。"><a href="#3-理解-对象等同性-这一概念。" class="headerlink" title="3. 理解 对象等同性 这一概念。"></a>3. 理解 <code>对象等同性</code> 这一概念。</h4><p>如果想检测对象的等同性，可提供 <code>NSObjcet</code>协议中的 <code>isEqual</code> 和 <code>hash</code> 方法。<br>相同的对象一定拥有相同的哈希码，但是两个哈希码相同的对象却未必相同。<br>不要盲目选择逐个检查每条属性，而是应该依照具体需求来定制方案，比如可以使用唯一的 <code>identifier</code> 来对比检查两个对象是否相等。<br>编写 <code>hash</code> 方法时,应该使用计算速度快而且哈希码碰撞几率低的算法。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">// Person 类</div><div class="line">@interface EOCPerson: NSObject</div><div class="line">@property (nonatomic, copy) NSString *firstName;</div><div class="line">@property (nonatomic, copy) NSString *lastName;</div><div class="line">@property (nonatomic, assign) NSUInteger age;</div><div class="line">@end</div><div class="line"></div><div class="line">// 实现 isEqual 方法</div><div class="line">- (BOOL)isEqual:(id)object &#123;</div><div class="line">	// 如果指针相等，则其均指向同一对象</div><div class="line">	if (self == object) &#123;</div><div class="line">		return YES;</div><div class="line">	&#125;</div><div class="line">	// 判断两个对象所属类是否相同</div><div class="line">	if ([self class] != [object class]) &#123;</div><div class="line">		return NO;</div><div class="line">	&#125;</div><div class="line">	// 可能存在父类与子类进行对比</div><div class="line">	EOCPerson *otherPerson = (EOCPerson *)object;</div><div class="line">	// 检查每个属性是否相等。</div><div class="line">	if (![_firstName isEqualToString: otherPerson.firstName]) &#123;</div><div class="line">		return NO;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	if (![_lastName isEqualToString: otherPerson.lastName]) &#123;</div><div class="line">		return NO;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	if (_age != otherPerson.age) &#123;</div><div class="line">		return NO;</div><div class="line">	&#125; </div><div class="line">	</div><div class="line">	return YES;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">// 这种写法如果将对象放入集合中就会产生性能问题。</div><div class="line">// 因为集合类型需要检索哈希表，会用对象的哈希码做索引。</div><div class="line">- （NSUInteger)hash &#123;</div><div class="line">	return 1337;</div><div class="line">&#125;</div><div class="line">// 这种写法需要额外负担创建字符串开销。如果将对象放入集合，需要先计算哈希码。</div><div class="line">- （NSUInteger)hash &#123;</div><div class="line">	NSString *stringToHash = [NSString stringWithFormat: @&quot;%@:%@:%i&quot;, _firstName, _lastName, _age];</div><div class="line">	return [stringToHash hash];</div><div class="line">&#125;</div><div class="line">// 既能保持较高效率，也不会过于频繁的重复。</div><div class="line">// 在编写 hash 方法时， 应该用当前的对象做做实验，以便在减少碰撞频度与降低运算复杂度之间取舍。</div><div class="line">- （NSUInteger)hash &#123;</div><div class="line">	NSUInteger firstNameHash = [_firstName hash];</div><div class="line">	NSUInteger lastNameHash = [_lastName hash];</div><div class="line">	NSUinteger ageHash = _age;</div><div class="line">	return firstNameHash ^ lastNameHash ^ ageHash;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
 <h4 id="3-以-类族模式-隐藏实现细节"><a href="#3-以-类族模式-隐藏实现细节" class="headerlink" title="3. 以 类族模式 隐藏实现细节"></a>3. 以 <code>类族模式</code> 隐藏实现细节</h4><p>用以隐藏 <code>抽象基类</code> 的实现细节。 比如 <code>UIButton</code> 类，若想创建按钮，需要调用下面这个类方法:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 该方法返回的对象都继承自同一个基类 UIButton</div><div class="line">+ (UIButton *)buttonWithType:(UIButtonType)type;</div></pre></td></tr></table></figure>
 <p>举例演示如何创建类族，假设有一个处理员工的类，每个员工都有名字和薪水两个属性，犹豫每个员工的工作内容不同，项目经理在带领员工做项目时，无需关心每个人如何完成工作，仅需指示其开工即可。</p>
@@ -208,8 +203,10 @@ return YES;
     
     <summary type="html">
     
-      &lt;p&gt;因为好久没写 OC 代码了，回头重看 《Effective Objective-C 编写高质量 iOS 与 OS X 代码的 52 个有效方法》，总结一些写 OC 时的技巧。&lt;/p&gt;
-&lt;h3 id=&quot;熟悉-Objective-C&quot;&gt;&lt;a href=&quot;#熟悉-Objectiv
+      &lt;p&gt;####1. 理解属性这一概念&lt;br&gt;使用 @property 语法来定义对象中所封装的数据。&lt;br&gt;通过 &lt;code&gt;assign strong weak copy unsafe_unretained&lt;/code&gt;定义存储数据所需的正确语义。&lt;br&gt;开发 iOS 程序时应该使用 &lt;code&gt;nonatomic&lt;/code&gt; 属性，因为 &lt;code&gt;atomic&lt;/code&gt; 属性会严重影响性能。&lt;/p&gt;
+&lt;h4 id=&quot;2-在对象内部尽量直接访问实例变量&quot;&gt;&lt;a href=&quot;#2-在对象内部尽量直接访问实例变量&quot; class=&quot;headerlink&quot; title=&quot;2. 在对象内部尽量直接访问实例变量&quot;&gt;&lt;/a&gt;2. 在对象内部尽量直接访问实例变量&lt;/h4&gt;&lt;p&gt;在对象内部读取数据时，应该直接通过实例变量来读，而写入数据时，则应该通过属性来写，以确保其声明的内存管理语意。&lt;br&gt;在初始化和 &lt;code&gt;dealloc&lt;/code&gt; 方法中，总是应该直接通过实例变量来读取数据。&lt;br&gt;在使用惰性初始化时，需要通过属性来读取数据。&lt;/p&gt;
+&lt;h4 id=&quot;3-理解-对象等同性-这一概念。&quot;&gt;&lt;a href=&quot;#3-理解-对象等同性-这一概念。&quot; class=&quot;headerlink&quot; title=&quot;3. 理解 对象等同性 这一概念。&quot;&gt;&lt;/a&gt;3. 理解 &lt;code&gt;对象等同性&lt;/code&gt; 这一概念。&lt;/h4&gt;&lt;p&gt;如果想检测对象的等同性，可提供 &lt;code&gt;NSObjcet&lt;/code&gt;协议中的 &lt;code&gt;isEqual&lt;/code&gt; 和 &lt;code&gt;hash&lt;/code&gt; 方法。&lt;br&gt;相同的对象一定拥有相同的哈希码，但是两个哈希码相同的对象却未必相同。&lt;br&gt;不要盲目选择逐个检查每条属性，而是应该依照具体需求来定制方案，比如可以使用唯一的 &lt;code&gt;identifier&lt;/code&gt; 来对比检查两个对象是否相等。&lt;br&gt;编写 &lt;code&gt;hash&lt;/code&gt; 方法时,应该使用计算速度快而且哈希码碰撞几率低的算法。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;30&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;31&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;32&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;33&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;34&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;35&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;36&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;37&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;38&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;39&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;40&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;41&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;42&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;43&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;44&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;45&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;46&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;47&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;48&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;49&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;50&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;51&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;52&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;53&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;// Person 类&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;@interface EOCPerson: NSObject&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;@property (nonatomic, copy) NSString *firstName;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;@property (nonatomic, copy) NSString *lastName;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;@property (nonatomic, assign) NSUInteger age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;@end&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;// 实现 isEqual 方法&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;- (BOOL)isEqual:(id)object &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	// 如果指针相等，则其均指向同一对象&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	if (self == object) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		return YES;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	// 判断两个对象所属类是否相同&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	if ([self class] != [object class]) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		return NO;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	// 可能存在父类与子类进行对比&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	EOCPerson *otherPerson = (EOCPerson *)object;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	// 检查每个属性是否相等。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	if (![_firstName isEqualToString: otherPerson.firstName]) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		return NO;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	if (![_lastName isEqualToString: otherPerson.lastName]) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		return NO;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	if (_age != otherPerson.age) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		return NO;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	return YES;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;// 这种写法如果将对象放入集合中就会产生性能问题。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;// 因为集合类型需要检索哈希表，会用对象的哈希码做索引。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;- （NSUInteger)hash &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	return 1337;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;// 这种写法需要额外负担创建字符串开销。如果将对象放入集合，需要先计算哈希码。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;- （NSUInteger)hash &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	NSString *stringToHash = [NSString stringWithFormat: @&amp;quot;%@:%@:%i&amp;quot;, _firstName, _lastName, _age];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	return [stringToHash hash];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;// 既能保持较高效率，也不会过于频繁的重复。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;// 在编写 hash 方法时， 应该用当前的对象做做实验，以便在减少碰撞频度与降低运算复杂度之间取舍。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;- （NSUInteger)hash &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	NSUInteger firstNameHash = [_firstName hash];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	NSUInteger lastNameHash = [_lastName hash];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	NSUinteger ageHash = _age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	return firstNameHash ^ lastNameHash ^ ageHash;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
@@ -217,48 +214,25 @@ return YES;
   </entry>
   
   <entry>
-    <title></title>
-    <link href="http://yoursite.com/2017/01/27/2017-01-27/"/>
-    <id>http://yoursite.com/2017/01/27/2017-01-27/</id>
-    <published>2017-01-27T12:16:06.000Z</published>
-    <updated>2017-01-27T12:26:57.000Z</updated>
+    <title>编写高质量的 Objective-C 代码 1. 熟悉 Objective-C</title>
+    <link href="http://yoursite.com/2017/02/18/%E7%86%9F%E6%82%89%20Objective-C%20/"/>
+    <id>http://yoursite.com/2017/02/18/熟悉 Objective-C /</id>
+    <published>2017-02-18T07:44:00.000Z</published>
+    <updated>2017-02-19T12:32:25.000Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="工作经历"><a href="#工作经历" class="headerlink" title="工作经历"></a>工作经历</h3><p>1.中国联通iPhone技术支持中心 （400－677－8899）2011年 至 2013年</p>
-<p>工作职位</p>
-<p>简要描述</p>
-<p>在岗时间</p>
-<p>坐席代表</p>
-<p>接听用户来电，解决用户在使用iPhone过程中遇到的问题。</p>
-<p>7个月</p>
-<p>投诉坐席代表</p>
-<p>解决用户的投诉问题，包括对本中心坐席代表的服务态度及技术方案投诉，对联通工作人员的服务投诉，对iPhone产品本身的投诉。</p>
-<p>20个月</p>
-<p><strong>培训师</strong></p>
-<p>对公司新入职的员工进行为期一个月的岗前技术培训，帮助新员工尽快融入iPhone项目，符合项目的用人要求。</p>
-<p>至2014年9月</p>
-<p>2.独立软件开发者 2014 年至今</p>
-<p><strong>App</strong> <strong>名称</strong></p>
-<p><strong>简要描述</strong></p>
-<p><strong>角色</strong></p>
-<p><strong>链接</strong></p>
-<p>Lucuber</p>
-<p>魔方复原速拧玩家的辅助工具，内置复原公示模版及复原计时器</p>
-<p>设计者，程序员</p>
-<p><a href="">iTunes Store</a></p>
-<p>3.Apple Store 零售店 2014年9月 至今</p>
-<p>   任职 Specialist专家，其实销售岗位，但没有销售提成。更多的是向顾客提供合适的解决方案，将产品送到顾客手中，从而点燃顾客对 Apple 产品的激情。</p>
-<p><strong>教育</strong></p>
-<p>中国华北电力大学(函授)本科,计算机科学与技术专业,2007-2011</p>
-<p><strong>个人简介</strong></p>
-<p><strong>加入</strong> <strong>Apple</strong> <strong>之前，本着对技术的向往，我在微博，知乎，简书长期关注了很多</strong> <strong>iOS</strong> <strong>独立开发者，他们的分享大多与技术无关，却总能以从业者的视角点评一些科技圈的事件或者社会现象。慢慢这些人中的一部分成为了我的精神领袖，也是我迫切想成为的人，最终在2013年年底迈出了这艰难的一步，做为一个彻头彻尾的门外汉，从在互联网上寻找学习资源开始，历经磨难，由于身边没有可以提供资源的人，走了很多弯路，遇到最大的瓶颈就是每本关于</strong> <strong>iOS</strong> <strong>开发的教材我仅能看懂前几个章节，主要还是因为国内翻译的iOS开发书籍往往比较滞后，我开始学习的时候苹果刚刚发布</strong> <strong>iOS7</strong> <strong>，而教材一般都是</strong> <strong>iOS5</strong> <strong>或者</strong> <strong>iOS6</strong> <strong>，很多书上的源码敲到电脑上跑不通的，要么是苹果弃用了该方法，要么是方法发生了变化。我试了能试的所有教材，每次都因为碰到同样的问题而放弃，为此消极了一段时间，为了证明自己不是那么轻易就放弃的人，我开始通过论坛向一些从业者寻求帮助：到底应该怎么学？到底应该用什么教材？而我从</strong> <strong>TinyFool</strong> <strong>老师那里得到的回复让我醍醐灌顶一般终于摆正了自己的位置。他说我最大的问题就是面对困难总是逃避，为什么遇到一个技术难题就想换教材？如果我把这3个月的时间都用来努力攻克一本教材，一定早就突破了这个瓶颈。道理就是这么简单，我却在起初的学习过程中一直没有意识到，也正是因为</strong> <strong>TinyFool</strong> <strong>的一语道破玄机，我才真正踏上了</strong> <strong>iOS</strong> <strong>开发的学习之旅，我不再是那个遇到一丁点技术问题就轻言放弃的人，我开始借助谷歌尝试寻找答案，为了完成我的项目，我的学习进入了很有针对性的节奏，软件要实现怎样的功能，要用到怎样的技术，就专门找来那部分的教材资源先学习再应用，经历了各种跌宕起伏，驱使我一直前进最大的动力，就是我总能从中获得成就感，每完成一个有挑战的功能我都能兴奋的整夜整夜睡不着，他喵的从没想到自己竟然这么屌。</strong></p>
-<p><strong>现在，回想起自己从一个彻头彻尾的门外汉，到第一款软件上架</strong> <strong>App Store</strong> <strong>所经历的一切，印象最深的就是整天的生活除了工作，就是写代码，公交地铁时刻都在看技术文档，睡的也很少，曾一度开始产生幻觉，躺在床上满脑子都是代码，连做的梦都比之前有技术含量了很多。我从这个过程中最大收获不是对技术的提高，而是通过不断的挑战自己，发现了自己的极限，自己的潜力。</strong></p>
-<p><strong>我曾经多次幻想自己身为一名软件攻城狮的形象，却在面对苹果</strong> <strong>offer</strong> <strong>的时候，没有禁住诱惑，加入了</strong> <strong>Apple， 因为我曾经看到过这样一句话，如果你在26岁之前，有机会加入</strong> <strong>Apple，去感受一下这个宇宙最屌的零售店，是如何运营，如何管理的，一定是非常有价值的体验。 而那一年，我正好26岁。 我加入了</strong> <strong>Apple，感受到了所谓的企业文化的力量，也有幸经历了东北地区第一家</strong> <strong>Apple Store</strong> <strong>沈阳中街店 从筹备到开店的全过程。但这终究不是我想要的。有人说，人生最可怕的事情不是失败，而是，我本可以！我热爱软件开发这个行业，虽然我不是技术大牛，甚至连小牛都谈不到，但我信奉乔布斯说过的那句话：只有那些疯狂到认为自己可以改变世界的人，才能真正改变这个世界。我没有那么疯狂，我只是幻想着自己有一天能通过自己一点点力量，让这个世界更美好一些。总之，我不想让未来的自己想起：当年为什么不去做一名程序猿！</strong></p>
+    <content type="html"><![CDATA[<p>因为好久没写 OC 代码了，回头重看 《Effective Objective-C 编写高质量 iOS 与 OS X 代码的 52 个有效方法》，总结一些 OC 编码时的技巧。</p>
+<h3 id="熟悉-Objective-C"><a href="#熟悉-Objective-C" class="headerlink" title="熟悉 Objective-C"></a>熟悉 Objective-C</h3><h5 id="1-除非必要，否则不要引入头文件"><a href="#1-除非必要，否则不要引入头文件" class="headerlink" title="1. 除非必要，否则不要引入头文件"></a>1. 除非必要，否则不要引入头文件</h5><p>一般来说，应再某个类的头文件中使用向前声明来提及某个类，并在实现文件（.m）中引入那些类的头文件，以降低类之间的耦合。<br>当无法使用向前声明时，比如要声明某个类遵循某个协议。在这种情况下，尽量把<code>该类遵循某协议</code>的声明移入<code>class-continuation 分类</code>中。如果不行的话，就把某协议单独放在一个头文件中，然后将其引入。</p>
+<h5 id="2-尽量使用字面量创建数组、字典、字符串、数值"><a href="#2-尽量使用字面量创建数组、字典、字符串、数值" class="headerlink" title="2. 尽量使用字面量创建数组、字典、字符串、数值"></a>2. 尽量使用字面量创建数组、字典、字符串、数值</h5><p>与常规方法相比更加简明。同时，如果值中有 nil，则会抛出异常，方便定位问题。而使用常规方法遇到 nil 会自动结束向集合添加数值。<br><a id="more"></a></p>
+<h5 id="3-避免使用-define-预处理命令定义常量"><a href="#3-避免使用-define-预处理命令定义常量" class="headerlink" title="3. 避免使用 #define 预处理命令定义常量"></a>3. 避免使用 #define 预处理命令定义常量</h5><p>因为这样定义出来的常量不含类型信息，仅做预编译阶段的替换操作。无法利用编译器产生警告信息。<br>应该选择在实现文件中使用 <code>static（定义作用域） const（readOnly）</code> 来定义只在编译单元内可见的常量，此常量不在全局符号表中，无需加前缀。<br>如果需要定义全局常量，选择在头文件中使用 <code>extern</code>.并在相关实现文件中初始化其值，因为这种常量会出现再全局符号表中，所以应该加前缀，通常使用与之相关的类名做前缀。（OC 没有命名空间）。</p>
+<h5 id="4-使用枚举表示状态、选项、状态码"><a href="#4-使用枚举表示状态、选项、状态码" class="headerlink" title="4. 使用枚举表示状态、选项、状态码"></a>4. 使用枚举表示状态、选项、状态码</h5><p>应该使用枚举来表示状态机的状态、传递给方法的选择以及状态码等值，给这些值起个易懂的名字。<br>如果把传递给某个方法的选项用枚举表示，而多个选择又可以同时使用，那么就将各选项值定义为 2 的幂，以便通过按位或操作将其组合起来。<br>用 <code>NS_ENUM</code> 与 <code>NS_OPTIONS</code> 宏来定义枚举类型，并指明底层数据类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">typedef NS_ENUM(NSUInteger, EOCConnectionState) &#123;</div><div class="line">	EOCConnectionStateDisconnected,</div><div class="line">	EOCConnectionStateConnecting,</div><div class="line">	EOCConnectionStateConnected,</div><div class="line">&#125;</div><div class="line"></div><div class="line">typedef NS_OPTIONS(NSUInteger, EOCPermittedDirection) &#123;</div><div class="line">	EOCPermittedDirectionUp    = 1 &lt;&lt; 0,</div><div class="line">	EOCPermittedDirectionDown  = 1 &lt;&lt; 1,</div><div class="line">	EOCPermittedDirectionLeft  = 1 &lt;&lt; 2,</div><div class="line">	EOCPermittedDirectionRight = 1 &lt;&lt; 3,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
     
-      &lt;h3 id=&quot;工作经历&quot;&gt;&lt;a href=&quot;#工作经历&quot; class=&quot;headerlink&quot; title=&quot;工作经历&quot;&gt;&lt;/a&gt;工作经历&lt;/h3&gt;&lt;p&gt;1.中国联通iPhone技术支持中心 （400－677－8899）2011年 至 2013年&lt;/p&gt;
-&lt;p&gt;工作职位&lt;/p&gt;
+      &lt;p&gt;因为好久没写 OC 代码了，回头重看 《Effective Objective-C 编写高质量 iOS 与 OS X 代码的 52 个有效方法》，总结一些 OC 编码时的技巧。&lt;/p&gt;
+&lt;h3 id=&quot;熟悉-Objective-C&quot;&gt;&lt;a href=&quot;#熟悉-Objective-C&quot; class=&quot;headerlink&quot; title=&quot;熟悉 Objective-C&quot;&gt;&lt;/a&gt;熟悉 Objective-C&lt;/h3&gt;&lt;h5 id=&quot;1-除非必要，否则不要引入头文件&quot;&gt;&lt;a href=&quot;#1-除非必要，否则不要引入头文件&quot; class=&quot;headerlink&quot; title=&quot;1. 除非必要，否则不要引入头文件&quot;&gt;&lt;/a&gt;1. 除非必要，否则不要引入头文件&lt;/h5&gt;&lt;p&gt;一般来说，应再某个类的头文件中使用向前声明来提及某个类，并在实现文件（.m）中引入那些类的头文件，以降低类之间的耦合。&lt;br&gt;当无法使用向前声明时，比如要声明某个类遵循某个协议。在这种情况下，尽量把&lt;code&gt;该类遵循某协议&lt;/code&gt;的声明移入&lt;code&gt;class-continuation 分类&lt;/code&gt;中。如果不行的话，就把某协议单独放在一个头文件中，然后将其引入。&lt;/p&gt;
+&lt;h5 id=&quot;2-尽量使用字面量创建数组、字典、字符串、数值&quot;&gt;&lt;a href=&quot;#2-尽量使用字面量创建数组、字典、字符串、数值&quot; class=&quot;headerlink&quot; title=&quot;2. 尽量使用字面量创建数组、字典、字符串、数值&quot;&gt;&lt;/a&gt;2. 尽量使用字面量创建数组、字典、字符串、数值&lt;/h5&gt;&lt;p&gt;与常规方法相比更加简明。同时，如果值中有 nil，则会抛出异常，方便定位问题。而使用常规方法遇到 nil 会自动结束向集合添加数值。&lt;br&gt;
     
     </summary>
     
@@ -327,23 +301,9 @@ return YES;
   </entry>
   
   <entry>
-    <title>socket 笔记</title>
-    <link href="http://yoursite.com/2016/10/28/2016-12-13/"/>
-    <id>http://yoursite.com/2016/10/28/2016-12-13/</id>
-    <published>2016-10-28T07:44:00.000Z</published>
-    <updated>2016-12-13T13:59:41.000Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>实现 StarRatingView 控件</title>
-    <link href="http://yoursite.com/2016/10/28/2016-11-12/"/>
-    <id>http://yoursite.com/2016/10/28/2016-11-12/</id>
+    <link href="http://yoursite.com/2016/10/28/%E5%AE%9E%E7%8E%B0%20StarRatingView%20%E6%8E%A7%E4%BB%B6/"/>
+    <id>http://yoursite.com/2016/10/28/实现 StarRatingView 控件/</id>
     <published>2016-10-28T07:44:00.000Z</published>
     <updated>2016-11-12T05:10:11.000Z</updated>
     
@@ -407,11 +367,11 @@ return YES;
   </entry>
   
   <entry>
-    <title>比 UIAlerController 更好的选择</title>
+    <title>比 UIAlertController 更好的选择</title>
     <link href="http://yoursite.com/2016/10/11/ActionSheetView/"/>
     <id>http://yoursite.com/2016/10/11/ActionSheetView/</id>
     <published>2016-10-11T02:30:00.000Z</published>
-    <updated>2016-11-13T05:47:22.000Z</updated>
+    <updated>2017-02-19T12:18:06.000Z</updated>
     
     <content type="html"><![CDATA[<p>在 iOS 开发中我们会经常使用到 <code>UIAlertController</code>, 但本身提供的 API 接口有限, 自定义外观会非常麻烦, 更别提在其中使用自定义的 View 了. 今天我们来封装一个 <code>ActionSheetView</code>, 用来代替系统提供的 <code>actionSheet</code> 类型. </p>
 <p><img src="http://7xrfzx.com1.z0.glb.clouddn.com/2016-11-13-屏幕快照 2016-11-13 下午1.46.14.png" alt="屏幕快照 2016-11-13 下午1.46.14"></p>

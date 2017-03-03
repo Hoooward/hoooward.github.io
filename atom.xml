@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-03-03T06:41:10.000Z</updated>
+  <updated>2017-03-03T06:46:10.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>GCD - dispatch_semaphore 的使用</title>
-    <link href="http://yoursite.com/2017/03/01/2017-03-01/"/>
-    <id>http://yoursite.com/2017/03/01/2017-03-01/</id>
+    <title>dispatch_semaphore 的使用</title>
+    <link href="http://yoursite.com/2017/03/01/2017-03-01%20dispatch_semaphore%20%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <id>http://yoursite.com/2017/03/01/2017-03-01 dispatch_semaphore 的使用/</id>
     <published>2017-03-01T12:01:00.000Z</published>
-    <updated>2017-03-03T06:41:10.000Z</updated>
+    <updated>2017-03-03T06:46:10.000Z</updated>
     
     <content type="html"><![CDATA[<p>利用 GCD 提供的 <code>dispatch_async</code> 函数在并发队列中执行任务时, 其任务的执行顺序以及并发数量不可控, 想要实现并发控制的解决方案其实有很多. 比如使用 <code>NSOperationQueue</code> 的 <code>maxConcurrentOperationCount</code> 属性可以控制 <code>NSOperation</code> 中同时执行任务的最大数量. 下面我们来看看再 GCD 中的解决方法</p>
 <h3 id="dispatch-semaphore"><a href="#dispatch-semaphore" class="headerlink" title="dispatch_semaphore"></a>dispatch_semaphore</h3><p>我们先来看看有关 <code>dispatch_semaphore</code> 的三个方法.</p>
@@ -82,11 +82,11 @@
   </entry>
   
   <entry>
-    <title>编写高质量的 Objective-C 代码 2. 对象、消息、运行时</title>
+    <title>编写高质量的 Objective-C 代码 第一章 对象、消息、运行时</title>
     <link href="http://yoursite.com/2017/02/19/%E5%AF%B9%E8%B1%A1%E3%80%81%E6%B6%88%E6%81%AF%E3%80%81%E8%BF%90%E8%A1%8C%E6%97%B6%20/"/>
     <id>http://yoursite.com/2017/02/19/对象、消息、运行时 /</id>
     <published>2017-02-19T12:19:00.000Z</published>
-    <updated>2017-02-19T12:55:37.000Z</updated>
+    <updated>2017-03-03T06:49:08.000Z</updated>
     
     <content type="html"><![CDATA[<h4 id="1-理解属性这一概念"><a href="#1-理解属性这一概念" class="headerlink" title="1. 理解属性这一概念"></a>1. 理解属性这一概念</h4><p>使用 @property 语法来定义对象中所封装的数据。<br>通过 <code>assign strong weak copy unsafe_unretained</code>定义存储数据所需的正确语义。<br>开发 iOS 程序时应该使用 <code>nonatomic</code> 属性，因为 <code>atomic</code> 属性会严重影响性能。</p>
 <h4 id="2-在对象内部尽量直接访问实例变量"><a href="#2-在对象内部尽量直接访问实例变量" class="headerlink" title="2. 在对象内部尽量直接访问实例变量"></a>2. 在对象内部尽量直接访问实例变量</h4><p>在对象内部读取数据时，应该直接通过实例变量来读，而写入数据时，则应该通过属性来写，以确保其声明的内存管理语意。<br>在初始化和 <code>dealloc</code> 方法中，总是应该直接通过实例变量来读取数据。<br>在使用惰性初始化时，需要通过属性来读取数据。</p>
@@ -191,11 +191,11 @@
   </entry>
   
   <entry>
-    <title>编写高质量的 Objective-C 代码 1. 熟悉 Objective-C</title>
+    <title>编写高质量的 Objective-C 代码 第一章 熟悉 Objective-C</title>
     <link href="http://yoursite.com/2017/02/18/%E7%86%9F%E6%82%89%20Objective-C%20/"/>
     <id>http://yoursite.com/2017/02/18/熟悉 Objective-C /</id>
     <published>2017-02-18T07:44:00.000Z</published>
-    <updated>2017-02-19T12:53:41.000Z</updated>
+    <updated>2017-03-03T06:49:02.000Z</updated>
     
     <content type="html"><![CDATA[<p>因为好久没写 OC 代码了，回头重看 《Effective Objective-C 编写高质量 iOS 与 OS X 代码的 52 个有效方法》，总结一些 OC 编码时的技巧。</p>
 <h5 id="1-除非必要，否则不要引入头文件"><a href="#1-除非必要，否则不要引入头文件" class="headerlink" title="1. 除非必要，否则不要引入头文件"></a>1. 除非必要，否则不要引入头文件</h5><p>一般来说，应再某个类的头文件中使用向前声明来提及某个类，并在实现文件（.m）中引入那些类的头文件，以降低类之间的耦合。<br>当无法使用向前声明时，比如要声明某个类遵循某个协议。在这种情况下，尽量把<code>该类遵循某协议</code>的声明移入<code>class-continuation 分类</code>中。如果不行的话，就把某协议单独放在一个头文件中，然后将其引入。</p>
@@ -580,11 +580,11 @@
   </entry>
   
   <entry>
-    <title>利用 Associated Objects 为 UIImageView 添加 activityIndicator</title>
+    <title>为 UIImageView 添加 UIActivityIndicatorView</title>
     <link href="http://yoursite.com/2016/05/20/runtime/"/>
     <id>http://yoursite.com/2016/05/20/runtime/</id>
     <published>2016-05-20T07:21:37.000Z</published>
-    <updated>2016-11-06T06:27:36.000Z</updated>
+    <updated>2017-03-03T06:47:17.000Z</updated>
     
     <content type="html"><![CDATA[<p>在实现类似与微博或者微信的 <code>timeline</code> 功能时, 往往需要在 <code>UITableViewCell</code> 中利用 <code>UIImageView</code> 展示单张或多张图片, 这些图片的来源通常都是网络. 而一旦网络速度不稳定, cell 中的 imageView 异步加载图片的过程就会一直显示 backgroundColor. 用户对图片正在下载的情况全然不知. 而像 <code>SDWebImage</code> 和 <code>Kingfisher</code> 这样的第三方框架很好的解决了这种问题: 一方面可以显示一张 placeholderImage, 也可以显示一个 <code>UIActivityIndicatorView</code> 让用户感受到下载的进程. </p>
 <p>而实现 activityIndicatorView 的方法又有很多种, 我第一个想到的就是自定义一个 <code>UIView</code>, 在里面添加一个 <code>UIImageView</code> 和 一个 <code>UIActivityIndicatorView</code>. 之后使用这个自定义的 view 就可以很好的完成任务. 而最近我在使用 <code>Kingfisher</code> 时, 发现它利用 分类 的功能结合 runtime 的特性, 直接为 <code>UIImageView</code> 添加一个 indicatorView 的实例变量. </p>
@@ -798,11 +798,11 @@
   </entry>
   
   <entry>
-    <title> Octopress的初级使用</title>
+    <title> Octopress 常用命令</title>
     <link href="http://yoursite.com/2016/03/16/Octopress%E7%9A%84%E5%88%9D%E7%BA%A7%E4%BD%BF%E7%94%A8/"/>
     <id>http://yoursite.com/2016/03/16/Octopress的初级使用/</id>
     <published>2016-03-16T07:23:30.000Z</published>
-    <updated>2016-03-16T07:35:20.000Z</updated>
+    <updated>2017-03-03T06:46:56.000Z</updated>
     
     <content type="html"><![CDATA[<p>前两天无意间看到一个部署 Octopress 的教程, 今天终于抽出时间折腾了一下.<br>因为对 Git、Rudy 和 HTML 没啥了解，遇到很多问题，所以先把今后可能用到的语法总结一下。<br><a href="http://octopress.org/docs/" target="_blank" rel="external">Octopress文档链接</a></p>
 <h2 id="代码高亮的-Syntax"><a href="#代码高亮的-Syntax" class="headerlink" title="代码高亮的 Syntax"></a>代码高亮的 Syntax</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[language] [title] [url] [link text]</div><div class="line">code snippet</div></pre></td></tr></table></figure>
